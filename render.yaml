@@ -1,0 +1,41 @@
+services:
+  # Backend Web Service
+  - type: web
+    name: stud-asst-backend
+    env: node
+    plan: free
+    rootDir: Backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: NODE_ENV
+        value: production
+
+  # Frontend Static Site
+  - type: web
+    name: stud-asst-frontend
+    env: static
+    plan: free
+    rootDir: Frontend
+    buildCommand: npm install && npm run build
+    publishPath: dist
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=0, must-revalidate
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: stud-asst-backend
+          property: host

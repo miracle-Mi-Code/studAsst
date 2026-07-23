@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+/* Typewriter cursor */
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.typewriter-cursor {
+  display: inline-block;
+  width: 0.6ch;
+  background-color: currentColor;
+  margin-left: 0.2rem;
+  animation: blink 1s steps(2, start) infinite;
+}
+
+/* Smooth color/background transitions for theme switching */
+html,
+body,
+#root,
+.min-h-screen {
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}
+
+/* Color palette using CSS variables (switchable via [data-theme]) */
+:root {
+  --bg: #f8fafc;
+  --text: #0f172a;
+  --primary: #4f46e5;
+  --accent: #6366f1;
+  --muted: #6b7280;
+  --card-bg: #ffffff;
+  --card-border: #e6e7ee;
+}
+
+html[data-theme="dark"] {
+  --bg: #0f172a;
+  --text: #e6eef8;
+  --primary: #8b5cf6;
+  --accent: #a78bfa;
+  --muted: #94a3b8;
+  --card-bg: #071129;
+  --card-border: #0f172a;
+}
+
+/* Subtle card entrance animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.card-animate {
+  animation: fadeUp 420ms cubic-bezier(.2,.9,.3,1) both;
+}
+
+/* Utility for smooth button transitions */
+.btn-transition {
+  transition: background-color 160ms ease, transform 140ms ease, color 160ms ease;
+}
+
+/* Make icons inherit current text color */
+.icon-current { color: inherit; fill: currentColor; }
